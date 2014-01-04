@@ -162,8 +162,10 @@ class SocialLogin(object):
         self.save(request, connect=True)
 
     def serialize(self):
+        user = self.account.user
+        user.save = None
         ret = dict(account=serialize_instance(self.account),
-                   user=serialize_instance(self.account.user),
+                   user=serialize_instance(user),
                    state=self.state,
                    email_addresses=[serialize_instance(ea)
                                     for ea in self.email_addresses])
